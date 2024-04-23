@@ -74,8 +74,13 @@ if __name__ == "__main__":
     logger.info("Início do Processador de Consultas")
     config = ler_configuracao("SRC/PC.CFG")
     if config:
+        start_time = datetime.now()
         processar_consultas(config['LEIA'], config['CONSULTAS'], config['ESPERADOS'])
+        end_time = datetime.now()
+
     logger.info("Processador de Consultas finalizado")
+    logging.info("Tempo total do processador de consulta: %s", end_time - start_time)
+
 
 
 # %%

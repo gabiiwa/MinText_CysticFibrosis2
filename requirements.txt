@@ -1,1 +1,6 @@
 nltk
+logging
+collections
+csv
+re
+datetime
