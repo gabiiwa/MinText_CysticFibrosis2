@@ -1,0 +1,40 @@
+﻿Descrição do Modelo Vetorial
+Introdução
+Este documento descreve o modelo vetorial utilizado no sistema de recuperação de informações implementado para a base CysticFibrosis2. O sistema é dividido em módulos que se comunicam através de arquivos, com cada módulo responsável por uma parte específica do processo de indexação e recuperação de consultas.
+
+Módulos do Sistema
+O sistema é composto pelos seguintes módulos:
+
+1. Processador de Consultas
+Responsável por transformar o arquivo de consultas XML fornecido para o padrão de palavras utilizado pelo sistema. Gera dois arquivos no formato CSV, um com consultas processadas e outro com os resultados esperados.
+
+2. Gerador de Lista Invertida
+Cria listas invertidas simples a partir dos documentos fornecidos, armazenando em um arquivo CSV. Cada linha representa uma palavra e contém uma lista dos identificadores de documentos onde a palavra aparece.
+
+3. Indexador
+Constrói o modelo vetorial a partir das listas invertidas, aplicando o cálculo de TF-IDF para cada termo e documento. O resultado é uma estrutura de memória que representa a matriz termo-documento.
+
+4. Buscador
+Realiza consultas no modelo vetorial e escreve as respostas em um arquivo CSV. Cada linha do arquivo contém o identificador da consulta e uma lista de documentos classificados por relevância.
+
+Formato do Modelo Vetorial
+O modelo vetorial é armazenado no formato CSV, onde cada linha representa um termo e seus respectivos documentos e pesos calculados pelo TF-IDF. O arquivo segue a seguinte estrutura:
+
+Primeiro campo: Termo (palavra).
+Segundo campo: Identificador do documento.
+Terceiro campo: Peso TF-IDF do termo no documento.
+O arquivo está formatado com o ponto e vírgula (";") como separador dos campos.
+
+Cálculo do TF-IDF
+O cálculo do TF-IDF segue a equação:
+
+TF-IDF = TF * IDF
+
+Onde:
+
+TF (Term Frequency) é a frequência do termo no documento.
+IDF (Inverse Document Frequency) é o logaritmo do número total de documentos dividido pelo número de documentos que contêm o termo.
+Para termos que aparecem em um documento, o TF é assumido como 1 (já que cada palavra na consulta tem o peso 1), e o IDF é calculado com base no número de documentos que contêm o termo.
+
+Uso do Modelo
+O modelo vetorial é utilizado pelo módulo Buscador para responder consultas. As consultas são vetores no mesmo espaço que os documentos, e a relevância é determinada pela distância entre os vetores de consulta e documento.
