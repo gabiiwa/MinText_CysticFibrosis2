@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# #start anaconda
+# conda activate
+
 # Instala as dependências do Python
 pip3 install -r requirements.txt
 
@@ -11,6 +14,7 @@ python SRC/PC.py
 python SRC/GLI.py
 python SRC/INDEX.py
 python SRC/BUSCA.py
+python SRC/script_aval.py
 
 # Finaliza a contagem do tempo
 end_time=$(date +%s%N)

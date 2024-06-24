@@ -60,10 +60,11 @@ def buscar(modelo, consultas):
         resultados[consulta_id] = sorted(ranking.items(), key=lambda item: item[1], reverse=True)
     return resultados
 
-def escrever_resultados(nome_arquivo, resultados):
+def escrever_resultados(nome_arquivo, resultados,cabecalho):
     try:
         with open(nome_arquivo, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile, delimiter=';')
+            writer.writerow(cabecalho)
             for consulta_id, docs in resultados.items():
                 linha = [consulta_id, [(i+1, doc[0], doc[1]) for i, doc in enumerate(docs)]]
                 writer.writerow(linha)
@@ -78,7 +79,7 @@ if __name__ == '__main__':
     modelo_vetorial = ler_modelo_vetorial(config['MODELO'])
     consultas = ler_consultas(config['CONSULTAS'])  
     resultados = buscar(modelo_vetorial, consultas)
-    escrever_resultados(config['RESULTADOS'], resultados)
+    escrever_resultados(config['RESULTADOS'], resultados,['id_consulta','lista'])
     end_time = datetime.now()
 
     logging.info("Tempo total do buscador: %s", end_time - start_time)
